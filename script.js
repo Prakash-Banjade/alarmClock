@@ -1,5 +1,6 @@
   // Creating the live clock
   let timeContainer = document.getElementById('clock');
+  let alarmTone = new Audio('alarmTone.mp3');
   Time();
   showAlarms();
 
@@ -10,15 +11,6 @@
           Time();
       }, 1000);
   }
-
-  // Adding Js on add alarm button
-
-  let addAlarm = document.getElementById('addAlarm');
-  addAlarm.addEventListener('click', (e) => {
-
-  });
-
-
 
   //   Adding js on modal
   let date = new Date();
@@ -125,7 +117,8 @@
           MINUTE: minutes.value,
           PERIOD: periods.value,
           DAYS: Days,
-          TITLE: document.getElementById('alarmName').value
+          TITLE: document.getElementById('alarmName').value,
+          TOGGLE: true
       }
 
       myAlarms.push(myAlarmObj);
@@ -143,7 +136,10 @@
   })
 
   //   showing the alarms
+  var toggleBtns;
+
   function showAlarms() {
+
       let alarms = localStorage.getItem('alarms');
       let myAlarms;
 
@@ -157,12 +153,30 @@
 
       let html = "";
       myAlarms.forEach(function(element, index) {
+          let alarmDays = ``;
+          let date = new Date();
+          let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          element.DAYS.forEach(function(item) {
+              if (item == weekDays[date.getDay()]) {
+
+                  alarmDays += `<span style="color: yellow;">${item}</span> `
+              } else {
+                  alarmDays += `<span>${item}</span> `;
+              }
+          })
+
+
 
           html += ` <div class="alarm">
                       <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
-                      <p>${String(element.DAYS)}</p>
+                      <p>${alarmDays}</p>
                       <strong>${element.TITLE}</strong>
-
+                      <div class="toggleAlarmParent">
+                      <div class="toggleAlarm" id="toggleAlarm" title="Turn off alarm">
+  
+  
+                      </div>
+                  </div>
                       <i class="fas fa-times" id="${index}" title="Delete Alarm" onclick="delAlarm(this.id)"></i>
                   </div>`;
       })
@@ -173,6 +187,7 @@
       } else {
           document.getElementById('alarmContainer').innerHTML = `<p style="font-family: var(--primary-font); color: rgb(0 0 0 / .8); text-align: center;">No alarms set yet !</p>`;
       }
+      toggleBtns = document.querySelectorAll('.toggleAlarm');
   }
 
   //   Deleting the alarm when click on cross
@@ -189,6 +204,22 @@
   cancelAlarmBtn.addEventListener('click', () => {
       document.getElementById('modalContainer').style.display = 'none';
   })
+
+  // Toggling the alarm on or off
+  toggleBtns.forEach(function(toggle) {
+      toggle.addEventListener('click', (e) => {
+          let targetedAlarm = e.target.parentNode.parentNode.children[4].id;
+          console.log(targetedAlarm);
+      })
+  })
+
+
+
+
+
+
+
+
 
   //   Checking the Alarm to ring or not || Performing the actual work
   let x;
@@ -222,22 +253,51 @@
 
           //   Alarm set without any weekdays
           if (element.DAYS.length == 0) {
-              if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod)) {
-                  console.log('Alarm rang' + alarmTime + alarmPeriod + ' ' + 'No weekdays set');
+              if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod) && date.getSeconds() == 0 && element.TOGGLE == true) {
+                  console.log('Alarm rang' + ' ' + alarmTime + ' ' + alarmPeriod + ' ' + 'No weekdays set');
+                  alarmTone.addEventListener('ended', function() {
+                      this.currentTime = 0;
+                      this.play();
+                  }, false);
+                  alarmTone.play();
+                  let palet = document.getElementById('alarmRingingPalet');
+                  palet.style.display = 'flex';
+                  palet.children[0].innerText = element.HOUR + ':' + element.MINUTE + ' ' + element.PERIOD;
+                  palet.children[1].innerText = element.TITLE;
+
                   clearInterval(x);
                   setTimeout(() => {
                       checkingAlarm();
+                      if (!alarmTone.paused) {
+                          alarmTone.pause();
+                          let palet = document.getElementById('alarmRingingPalet');
+                          palet.style.display = 'none';
+                      }
                   }, 60000);
               }
           }
           //   Alarm set with today weekday
           else if (element.DAYS.indexOf(todayDay) != -1) {
               element.DAYS.forEach(function(day) {
-                  if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod) && todayDay == day) {
+                  if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod) && todayDay == day && date.getSeconds() == 0 && element.TOGGLE == true) {
                       console.log('Alarm rang' + alarmTime + alarmPeriod + ' ' + 'Setting the weekday' + `${day}`);
+                      alarmTone.addEventListener('ended', function() {
+                          this.currentTime = 0;
+                          this.play();
+                      }, false);
+                      alarmTone.play();
+                      let palet = document.getElementById('alarmRingingPalet');
+                      palet.style.display = 'flex';
+                      palet.children[0].innerText = element.HOUR + ':' + element.MINUTE + ' ' + element.PERIOD;
+                      palet.children[1].innerText = element.TITLE;
                       clearInterval(x);
                       setTimeout(() => {
                           checkingAlarm();
+                          if (!alarmTone.paused) {
+                              alarmTone.pause();
+                              let palet = document.getElementById('alarmRingingPalet');
+                              palet.style.display = 'none';
+                          }
                       }, 60000);
                   }
 
@@ -247,3 +307,14 @@
           };
       });
   }
+
+
+  //   When clicked on dismiss alarm button
+
+  let dismiss = document.getElementById('dismissAlarm');
+  dismiss.addEventListener('click', function() {
+      alarmTone.pause();
+      let palet = document.getElementById('alarmRingingPalet');
+      palet.style.display = 'none';
+
+  })

@@ -98,19 +98,40 @@
 
     <section id="alarmsContainerParent">
         <div class="alarmContainer" id="alarmContainer">
-            <!-- <div id="alarm">
-                <h1>11:12 PM</h1>
-                <p>Sunday, monday</p>
-                <strong>Cricket Tournament</strong>
+            <!-- <div id="alarm" class="alarm">
+                <h1>TIME</h1>
+                <p>ALARM DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday']</p>
+                <strong>ALARM TITLE</strong>
+
+                <div class="toggleAlarmParent">
+                    <div class="toggleAlarm " id="toggleAlarm" title="Turn off alarm">
+
+
+                    </div>
+                </div>
 
                 <i class="fas fa-times" title="Delete Alarm"></i>
             </div> -->
 
 
-
+            <!--  <div class="alarm">
+                    <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
+                    <p>${alarmDays}</p>
+                    <strong>${element.TITLE}</strong>
+                    <div class="toggleAlarmParent">
+                        <div class="toggleAlarm" id="toggleAlarm" title="Turn off alarm"></div>
+                    </div>
+                    <i class="fas fa-times" id="${index}" title="Delete Alarm" onclick="delAlarm(this.id)"></i>
+                </div> -->
 
 
         </div>
+    </section>
+
+    <section id="alarmRingingPalet" class="alarmRingingPalet">
+        <h1></h1>
+        <p> </p>
+        <button id="dismissAlarm">Dismiss</button>
     </section>
 
 
