@@ -1,5 +1,7 @@
   // Creating the live clock
   let timeContainer = document.getElementById('clock');
+  let dayAndDate = document.getElementById('dayAndDate');
+  let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let alarmTone = new Audio('https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/twirling-intime-lenovo-k8-note-alarm-tone-41440.mp3');
   Time();
   showAlarms();
@@ -9,6 +11,8 @@
   function Time() {
       let date = new Date();
       timeContainer.innerText = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+      dayAndDate.innerText = date.toDateString();
+
       setTimeout(() => {
           Time();
       }, 1000);
@@ -163,7 +167,7 @@
       myAlarms.forEach(function(element, index) {
           let alarmDays = ``;
           let date = new Date();
-          let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
           element.DAYS.forEach(function(item) {
               if (item == weekDays[date.getDay()]) {
 
