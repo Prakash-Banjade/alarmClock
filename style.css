@@ -49,16 +49,18 @@ body {
     padding: 20px 20px;
     position: fixed;
     bottom: 0;
-    right: 0;
+    z-index: 2;
 }
 
 .alarms .addAlarm {
     font-family: var(--primary-font);
+    background-color: #222;
+    color: dodgerblue;
+    z-index: 2;
     font-size: 2rem;
     padding: 1rem 1.3rem;
-    border: 2px solid black;
+    box-shadow: 0 0 30px 10px rgb(0 0 0 / .5);
     border-radius: 50%;
-    box-shadow: 0 0 15px 2px rgb(0 0 0 / .7), inset 0 0 12px .5px rgb(0 0 0 / .4);
     cursor: pointer;
 }
 
@@ -197,7 +199,7 @@ body {
 
 #addAlarmModal .alarmInput .dayContainer input {
     display: inline;
-    margin: 3px 25px 0px 2px;
+    margin: 2.8px 25px 0px 2px;
 }
 
 #addAlarmModal .alarmInput .dayContainer input:last-child {
@@ -246,7 +248,7 @@ body {
 .alarmContainer {
     width: 100%;
     margin-top: calc(9rem + 20px);
-    /* border: 2px solid red; */
+    margin-bottom: 8rem;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -280,6 +282,10 @@ body {
     color: white;
 }
 
+.alarmContainer .alarm .alarmOff {
+    color: #ccc !important;
+}
+
 .alarmContainer .alarm i {
     /* border: 2px solid black; */
     color: rgb(0 0 0 / .6);
@@ -305,8 +311,8 @@ body {
 .toggleAlarmParent .toggleAlarm {
     width: 3rem;
     height: 1.5rem;
-    background-color: white;
-    border: 2px solid black;
+    background-color: #ddd;
+    border: 2px solid transparent;
     border-radius: 20px;
     position: relative;
     cursor: pointer;
@@ -317,18 +323,19 @@ body {
     height: .9rem;
     width: .9rem;
     border-radius: 50%;
-    background-color: black;
+    background-color: #363940;
     position: absolute;
     top: 50%;
     left: 22%;
     transform: translate(-50%, -50%);
 }
 
-.toggleAlarmParent .toggleAlarm.alarmOff {
-    background-color: black;
+.toggleAlarmParent .toggleAlarm.alarmOn {
+    background-color: dodgerblue;
+    border: 2px solid dodgerblue;
 }
 
-.toggleAlarmParent .toggleAlarm.alarmOff::before {
+.toggleAlarmParent .toggleAlarm.alarmOn::before {
     content: '';
     height: .9rem;
     width: .9rem;
@@ -336,7 +343,7 @@ body {
     background-color: white;
     position: absolute;
     top: 50%;
-    left: 79%;
+    left: 75%;
     transform: translate(-50%, -50%);
 }
 

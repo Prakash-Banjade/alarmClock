@@ -1,6 +1,6 @@
   // Creating the live clock
   let timeContainer = document.getElementById('clock');
-  let alarmTone = new Audio('alarmTone.mp3');
+  let alarmTone = new Audio('https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/twirling-intime-lenovo-k8-note-alarm-tone-41440.mp3');
   Time();
   showAlarms();
 
@@ -40,6 +40,9 @@
           if (hours.value < 1) {
               hours.value = 12;
           }
+          if (hours.value.charAt(0) == 0 && hours.value.length == 2 && hours.value != 00) {
+              hours.value = hours.value.charAt(1);
+          }
       })
       //   Setting up minutes
   let minutes = document.getElementById('minutes');
@@ -57,6 +60,9 @@
   })
 
   minutes.addEventListener('blur', () => {
+      if (minutes.value.length == 1) {
+          minutes.value = 0 + minutes.value;
+      }
       if (minutes.value < 1) {
           minutes.value = 00;
       }
@@ -167,18 +173,32 @@
 
 
 
-          html += ` <div class="alarm">
-                      <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
-                      <p>${alarmDays}</p>
-                      <strong>${element.TITLE}</strong>
-                      <div class="toggleAlarmParent">
-                      <div class="toggleAlarm" id="toggleAlarm" title="Turn off alarm">
-  
-  
-                      </div>
-                  </div>
-                      <i class="fas fa-times" id="${index}" title="Delete Alarm" onclick="delAlarm(this.id)"></i>
-                  </div>`;
+          if (element.TOGGLE) {
+
+              html += ` <div class="alarm">
+            <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
+            <p>${alarmDays}</p>
+            <strong>${element.TITLE}</strong>
+            <div class="toggleAlarmParent">
+            <div class="toggleAlarm alarmOn" id="toggleAlarm" title="Turn off alarm">            
+            </div>
+            </div>
+            <i class="fas fa-times" id="${index}" title="Delete Alarm" onclick="delAlarm(this.id)"></i>
+            </div>`;
+          } else {
+              html += ` <div class="alarm">
+              <h1 class="alarmOff">${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
+              <p class="alarmOff">${alarmDays}</p>
+              <strong class="alarmOff">${element.TITLE}</strong>
+              <div class="toggleAlarmParent">
+              <div class="toggleAlarm " id="toggleAlarm" title="Turn on alarm">
+              
+              
+              </div>
+              </div>
+              <i class="fas fa-times" id="${index}" title="Delete Alarm" onclick="delAlarm(this.id)"></i>
+              </div>`;
+          }
       })
 
       if (myAlarms.length != 0) {
@@ -209,7 +229,11 @@
   toggleBtns.forEach(function(toggle) {
       toggle.addEventListener('click', (e) => {
           let targetedAlarm = e.target.parentNode.parentNode.children[4].id;
-          console.log(targetedAlarm);
+          let myAlarms = JSON.parse(localStorage.getItem('alarms'));
+          console.log('alarm off')
+          myAlarms[targetedAlarm].TOGGLE = myAlarms[targetedAlarm].TOGGLE == true ? false : true;
+          localStorage.setItem('alarms', JSON.stringify(myAlarms));
+          showAlarms();
       })
   })
 
@@ -247,7 +271,7 @@
       let date = new Date();
       let currTime = date.toLocaleTimeString();
       let todayDay = weekDays[date.getDay()];
-      myAlarms.forEach((element) => {
+      myAlarms.forEach((element, index) => {
           let alarmTime = `${element.HOUR}:${element.MINUTE}`;
           let alarmPeriod = `${element.PERIOD}`;
 
@@ -264,6 +288,9 @@
                   palet.style.display = 'flex';
                   palet.children[0].innerText = element.HOUR + ':' + element.MINUTE + ' ' + element.PERIOD;
                   palet.children[1].innerText = element.TITLE;
+                  myAlarms[index].TOGGLE = false;
+                  localStorage.setItem('alarms', JSON.stringify(myAlarms));
+                  showAlarms();
 
                   clearInterval(x);
                   setTimeout(() => {
@@ -273,7 +300,7 @@
                           let palet = document.getElementById('alarmRingingPalet');
                           palet.style.display = 'none';
                       }
-                  }, 60000);
+                  }, 50000);
               }
           }
           //   Alarm set with today weekday
@@ -298,7 +325,7 @@
                               let palet = document.getElementById('alarmRingingPalet');
                               palet.style.display = 'none';
                           }
-                      }, 60000);
+                      }, 50000);
                   }
 
               })
