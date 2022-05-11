@@ -182,9 +182,8 @@
           if (element.TOGGLE) {
 
               html += ` <div class="alarm">
-            <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
+            <h1>${element.HOUR}:${element.MINUTE} ${element.PERIOD} <strong>${element.TITLE}</strong> </h1>
             <p>${alarmDays}</p>
-            <strong>${element.TITLE}</strong>
             <div class="toggleAlarmParent">
             <div class="toggleAlarm alarmOn" id="toggleAlarm" title="Turn off alarm">            
             </div>
@@ -193,9 +192,8 @@
             </div>`;
           } else {
               html += ` <div class="alarm">
-              <h1 class="alarmOff">${element.HOUR}:${element.MINUTE} ${element.PERIOD}</h1>
+              <h1 class="alarmOff">${element.HOUR}:${element.MINUTE} ${element.PERIOD} <strong>${element.TITLE}</strong></h1>
               <p class="alarmOff">${alarmDays}</p>
-              <strong class="alarmOff">${element.TITLE}</strong>
               <div class="toggleAlarmParent">
               <div class="toggleAlarm " id="toggleAlarm" title="Turn on alarm">
               
