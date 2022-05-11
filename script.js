@@ -3,7 +3,8 @@
   let alarmTone = new Audio('https://d6cp9b00-a.akamaihd.net/downloads/ringtones/files/mp3/twirling-intime-lenovo-k8-note-alarm-tone-41440.mp3');
   Time();
   showAlarms();
-
+  let dddd = new Date();
+  //   console.log(typeof dddd.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }))
 
   function Time() {
       let date = new Date();
