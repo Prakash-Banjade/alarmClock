@@ -4,9 +4,10 @@
   Time();
   showAlarms();
 
+
   function Time() {
       let date = new Date();
-      timeContainer.innerText = date.toLocaleTimeString();
+      timeContainer.innerText = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
       setTimeout(() => {
           Time();
       }, 1000);
