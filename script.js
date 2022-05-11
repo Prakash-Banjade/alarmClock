@@ -209,7 +209,7 @@
           document.getElementById('alarmContainer').innerHTML = html;
 
       } else {
-          document.getElementById('alarmContainer').innerHTML = `<p style="font-family: var(--primary-font); color: rgb(0 0 0 / .8); text-align: center;">No alarms set yet !</p>`;
+          document.getElementById('alarmContainer').innerHTML = `<p style="font-family: var(--primary-font); color:dodgerblue; text-align: center;">No alarms set yet !</p>`;
       }
       toggleBtns = document.querySelectorAll('.toggleAlarm');
   }
@@ -242,7 +242,13 @@
   })
 
 
-
+  // Editing the alarm
+  //   let allAlarms = document.getElementsByClassName('alarm');
+  //   for (item of allAlarms) {
+  //       item.addEventListener('click', (e) => {
+  //           document.getElementById('modalContainer').style.display = 'flex';
+  //       })
+  //   }
 
 
 
@@ -296,6 +302,7 @@
                   localStorage.setItem('alarms', JSON.stringify(myAlarms));
                   showAlarms();
 
+
                   clearInterval(x);
                   setTimeout(() => {
                       checkingAlarm();
@@ -321,6 +328,7 @@
                       palet.style.display = 'flex';
                       palet.children[0].innerText = element.HOUR + ':' + element.MINUTE + ' ' + element.PERIOD;
                       palet.children[1].innerText = element.TITLE;
+
                       clearInterval(x);
                       setTimeout(() => {
                           checkingAlarm();

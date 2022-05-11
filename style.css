@@ -45,7 +45,7 @@ body {
 
 #dayAndDate {
     font-size: 1.5rem;
-    color: #de0;
+    color: purple;
     font-family: var(--secondary-font);
 }
 
@@ -276,7 +276,7 @@ body {
     border-radius: 5px;
     color: rgb(0 250 250 / .7);
     position: relative;
-    /* opacity: .8; */
+    cursor: pointer;
 }
 
 .alarmContainer .alarm h1 {
@@ -439,6 +439,10 @@ body {
     }
     #addAlarmModal {
         width: 100vw;
-        height: 70ch;
+        padding: 30px 10px 10px 10px;
+        /* height: 110vw; */
+    }
+    #addAlarmModal .alarmInput .dayContainer input {
+        margin: 2.8px 20px 0px 2px;
     }
 }
