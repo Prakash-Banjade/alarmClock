@@ -270,7 +270,7 @@
       }
       let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let date = new Date();
-      let currTime = date.toLocaleTimeString();
+      let currTime = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
       let todayDay = weekDays[date.getDay()];
       myAlarms.forEach((element, index) => {
           let alarmTime = `${element.HOUR}:${element.MINUTE}`;
