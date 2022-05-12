@@ -66,8 +66,8 @@
   })
 
   minutes.addEventListener('blur', () => {
-      if (minutes.value.length == 1) {
-          minutes.value = 0 + minutes.value;
+      if (minutes.value.length === 1) {
+          minutes.value = '0' + minutes.value;
       }
       if (minutes.value < 1) {
           minutes.value = 00;
