@@ -114,7 +114,14 @@
 
   let done = document.getElementById('done');
 
-  done.addEventListener('click', () => {
+  done.addEventListener('click', (e) => { addAlarm(e) });
+  document.getElementById('addAlarmModal').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+          addAlarm(e);
+      }
+  })
+
+  function addAlarm(event) {
       let alarms = localStorage.getItem('alarms');
       let myAlarms;
 
@@ -145,7 +152,7 @@
           addAlarm.classList.remove('alarmSet');
           addAlarm.children[0].classList.replace('fa-check', 'fa-plus');
       }, 3000);
-  })
+  }
 
   //   showing the alarms
   var toggleBtns;
