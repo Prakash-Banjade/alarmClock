@@ -171,7 +171,7 @@
           element.DAYS.forEach(function(item) {
               if (item == weekDays[date.getDay()]) {
 
-                  alarmDays += `<span style="color: yellow;">${item}</span> `
+                  alarmDays += `<span style="color: green;">${item}</span> `
               } else {
                   alarmDays += `<span>${item}</span> `;
               }
@@ -232,28 +232,11 @@
   // Toggling the alarm on or off
   toggleBtns.forEach(function(toggle) {
       toggle.addEventListener('click', (e) => {
-          let targetedAlarm = e.target.parentNode.parentNode.children[4].id;
-          let myAlarms = JSON.parse(localStorage.getItem('alarms'));
-          console.log('alarm off')
-          myAlarms[targetedAlarm].TOGGLE = myAlarms[targetedAlarm].TOGGLE == true ? false : true;
-          localStorage.setItem('alarms', JSON.stringify(myAlarms));
-          showAlarms();
+          console.log(toggle.parentNode.parentNode.children[3].id);
+
+
       })
   })
-
-
-  // Editing the alarm
-  //   let allAlarms = document.getElementsByClassName('alarm');
-  //   for (item of allAlarms) {
-  //       item.addEventListener('click', (e) => {
-  //           document.getElementById('modalContainer').style.display = 'flex';
-  //       })
-  //   }
-
-
-
-
-
 
   //   Checking the Alarm to ring or not || Performing the actual work
   let x;
@@ -282,13 +265,16 @@
       let currTime = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
       let todayDay = weekDays[date.getDay()];
       myAlarms.forEach((element, index) => {
-          let alarmTime = `${element.HOUR}:${element.MINUTE}`;
-          let alarmPeriod = `${element.PERIOD}`;
+          let checkHour;
+          if (date.getHours() > 12) {
+              checkHour = date.getHours() - 12;
+          }
+
 
           //   Alarm set without any weekdays
           if (element.DAYS.length == 0) {
-              if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod) && date.getSeconds() == 0 && element.TOGGLE == true) {
-                  console.log('Alarm rang' + ' ' + alarmTime + ' ' + alarmPeriod + ' ' + 'No weekdays set');
+              if (element.HOUR == checkHour && element.MINUTE == date.getMinutes() && currTime.includes(element.PERIOD) && date.getSeconds() == 0 && element.TOGGLE == true) {
+                  //   console.log('Alarm rang' + ' ' + alarmTime + ' ' + alarmPeriod + ' ' + 'No weekdays set');
                   alarmTone.addEventListener('ended', function() {
                       this.currentTime = 0;
                       this.play();
@@ -317,7 +303,7 @@
           //   Alarm set with today weekday
           else if (element.DAYS.indexOf(todayDay) != -1) {
               element.DAYS.forEach(function(day) {
-                  if (currTime.includes(alarmTime) && currTime.includes(alarmPeriod) && todayDay == day && date.getSeconds() == 0 && element.TOGGLE == true) {
+                  if (element.HOUR == checkHour && element.MINUTE == date.getMinutes() && currTime.includes(element.PERIOD) && todayDay == day && date.getSeconds() == 0 && element.TOGGLE == true) {
                       console.log('Alarm rang' + alarmTime + alarmPeriod + ' ' + 'Setting the weekday' + `${day}`);
                       alarmTone.addEventListener('ended', function() {
                           this.currentTime = 0;
