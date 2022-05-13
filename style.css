@@ -7,7 +7,7 @@
  :root {
     --primary-font: 'Source Code Pro', monospace;
     --secondary-font: 'Poppins', sans-serif;
-    color-scheme: dark;
+    /* color-scheme: dark; */
 }
 
 body {
@@ -454,6 +454,9 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
+     :root {
+        color-scheme: dark;
+    }
     #addAlarmModal .alarmInput .timeContainer label,
     #addAlarmModal .alarmInput .dayContainer label {
         color: #332233;
